@@ -1,0 +1,32 @@
+{
+  "title": "About Muadib, Dune Awakening Tools",
+  "content": [
+    {
+      "type": "text",
+      "text": "Muadib is an interactive website, providing tools and information for players."
+    },
+    {
+      "type": "text",
+      "header": "Features",
+      "text": "Muadib offers a variety of commands to diffrent tools. Type commands in the input box or select from suggestions."
+    },
+    {
+      "type": "list",
+      "header": "Available Commands",
+      "items": [
+        "/builder - Open the Dune Awakening base builder",
+        "/about - Display this information page"
+      ]
+    },
+    {
+      "type": "text",
+      "header": "Why the name Muadib?",
+      "text": "Muadib is named after the desert mouse, as they point the way to water. /n And this website is here to help you find your way in the desert of Dune Awakening."
+    },
+    {
+      "type": "infobox",
+      "header": "Development",
+      "text": "This website was developed for Dune Awakening fans. /n Contributions and suggestions are welcome! /n Contant me on Discord: @Konijnebeer /n For bug reports use the GitHub issue tracker."
+    }
+  ]
+}

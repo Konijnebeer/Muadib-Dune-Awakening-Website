@@ -1,24 +1,5 @@
 # IMPLEMENTED FEATURES
 
-✅ Option to rotate pieces with R and shift R (right and left)
-
-✅ Next to the shapes icon a hand icon(quick button is '4') for select mode here you can drag to select multiple pieces, then you ca ctrl+c and ctrl+v to copy and paste, (also add a ctrl+z to undo all actions and ctrl+y to redo them), make sure you can rotate the selection as a whole properly around it's center
-✅ - you can click ctrl and click other piecies to add them to the selecion or remove them from the selection
-✅ - you can do ctrl+g to group a selection, so when you select a single piece in the group all are selected
-
-✅ when you are in the load menu next to the cancel button is a 'new canvas' button to give you a empty new canvas, [maybe promt the user for a name]
-
-✅ to the left of the save and load button add a cogg icon for a settings modal, here are the following settings
-✅ - toggle fief outline, this is a single darker outline around the center that is 5x5 (it does not repeat)
-✅ - toggle advanced fief grid, this shows a darker outline grid that is 10x10 (it repeats)
-✅     - They can't both be on at once
-
-There are a couple features that can be improved
-✅ improve the styling of the fief toggle button to be more inline with other buttons when one is selected it should have a checkmark icon
-
-✅ Disable the browser keybinds for ctrl+z as now it does that instead of the app keybind
-
-
 # TODO
 
 you are our top most senior dev tasked with adding a new feature to the muadib aaplication, I need a new command named 'search' but this command does nothing on it's own it's a prefix to search trough the wiki

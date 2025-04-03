@@ -4,6 +4,11 @@
       "name": "/builder",
       "description": "Dune Awakening base builder",
       "handlerClass": "BuilderCommand"
+    },
+    {
+      "name": "/about",
+      "description": "Information and credits",
+      "handlerClass": "AboutCommand"
     }
   ]
 }
