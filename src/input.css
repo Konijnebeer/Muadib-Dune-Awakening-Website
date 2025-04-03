@@ -6,14 +6,15 @@
     src: url('../fonts/Dune_Rise.ttf') format('truetype');
 }
 
-/* Custom styles for frosted glass */
-.bg-opacity-20 {
+/* Custom styles that should be removed if using Tailwind v4 utilities directly */
+/* These classes are deprecated - kept for reference only */
+/* .bg-opacity-20 {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
 .backdrop-blur-md {
     backdrop-filter: blur(10px);
-}
+} */
 
 body {
     font-family: 'Arial', sans-serif; /* Updated font for the website */
@@ -54,7 +55,6 @@ body {
     font-size: 0.65rem; /* Make button text smaller */
     margin: 0 auto; /* Center the button */
 }
-
 
 textarea {
     resize: none; /* Disable resizing */
@@ -108,52 +108,13 @@ textarea {
     overflow-y: auto;
 }
 
-
-
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    20% {
-        transform: translateX(-8px);
-    }
-    40% {
-        transform: translateX(8px);
-    }
-    60% {
-        transform: translateX(-8px);
-    }
-    80% {
-        transform: translateX(8px);
-    }
-}
-
-.modal-content {
-    font-family: 'Open Sans', sans-serif;
-}
-.purple-glow {
-    animation: purpleGlow 2s ease-in-out infinite;
-}
-@keyframes purpleGlow {
-    0% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.8); }
-    100% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
-}
-.modal-glaze {
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-}
-.modal-header {
-    font-family: 'Dune Rise', sans-serif;
-}
 /* Style for command suggestions without hover effects */
 .suggestion-item {
     padding: 4px 8px;
     border-radius: 4px;
     cursor: pointer;
 }
+
 /* Add frosted glaze for suggestion box */
 #suggestion-box {
     background-color: rgba(255, 255, 255, 0.2);
@@ -161,11 +122,13 @@ textarea {
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
 }
+
 /* Enhanced modal backdrop styling */
 #modal-backdrop {
     backdrop-filter: blur(8px);
     transition: backdrop-filter 0.3s ease;
 }
+
 /* Glass modal styling */
 .glass-modal {
     background-color: rgba(255, 255, 255, 0.15);
@@ -174,6 +137,7 @@ textarea {
     border-radius: 12px;
     animation: purpleGlow 2s ease-in-out infinite;
 }
+
 .infobox-modal {
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);

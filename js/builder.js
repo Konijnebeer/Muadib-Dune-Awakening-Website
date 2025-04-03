@@ -1468,7 +1468,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create and append save items
         saves.forEach(save => {
             const saveItem = document.createElement('div');
-            saveItem.className = 'bg-white bg-opacity-60 p-3 rounded-md hover:bg-opacity-80 cursor-pointer transition-colors flex justify-between items-center';
+            saveItem.className = 'bg-white/60 p-3 rounded-md hover:bg-white/80 cursor-pointer transition-colors flex justify-between items-center';
             
             const saveInfo = document.createElement('div');
             
