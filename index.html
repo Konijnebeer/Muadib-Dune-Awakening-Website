@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muadib</title>
+    <link href="src/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="js/main.js" defer></script>
+    <style>
+        @font-face {
+            font-family: 'Dune Rise';
+            src: url('fonts/Dune_Rise.ttf') format('truetype');
+        }
+        body {
+            font-family: 'Dune Rise', sans-serif;
+        }
+        .normal-font {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-purple-900">
+    <header class="header-styles p-4 flex items-center">
+        <div class="flex items-center w-full max-w-screen-md mx-auto ml-0">
+            <img src="images/Muadib.png" alt="Logo" class="h-8 mr-4">
+            <h1 class="text-xl font-bold">Muadib</h1>
+        </div>
+    </header>
+    <main class="container mx-auto p-4 max-w-screen-md">
+        <section id="chat" class="flex justify-start items-center h-96 relative">
+            <div class="bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-6 shadow-lg w-full">
+                <div class="flex items-center space-x-2 relative">
+                    <div class="command-input-container flex-grow">
+                        <span class="command-prefix">/</span>
+                        <textarea id="command-input" class="w-full p-2 rounded-lg bg-purple-200 bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-purple-500 purple-glow pl-5" rows="1" placeholder="" style="resize: none;"></textarea>
+                    </div>
+                    <div id="suggestion-box" class="mt-4 bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-2 shadow-lg hidden">
+                        <ul id="suggestions" class="text-purple-900"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Modal Container -->
+    <div id="modal-container" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div id="modal-backdrop" class="absolute inset-0 bg-transparent pointer-events-auto"></div>
+        <div class="modal-dialog glass-modal relative w-4/5 max-w-4xl max-h-[80vh] overflow-hidden z-10 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-title" class="text-2xl font-bold text-purple-900 font-['Dune_Rise']"></h2>
+                <button id="close-modal" class="text-purple-900 hover:text-purple-700 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="modal-content" class="font-['Open_Sans'] text-purple-900 overflow-y-auto max-h-[calc(100%-3rem)] pr-2"></div>
+        </div>
+    </div>
+    
+    <footer class="footer-styles p-4 mt-auto flex items-center justify-start">
+        <div class="bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-4 shadow-lg text-center">
+            <p class="text-sm text-purple-900 mb-2">Copyright 2025</p>
+            <a href="https://github.com/konijnebeer" target="_blank" class="p-2 rounded-lg bg-purple-200 bg-opacity-50 hover:bg-opacity-70">
+                GitHub
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

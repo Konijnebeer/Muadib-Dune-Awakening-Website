@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* ===== FONTS ===== */
+@font-face {
+    font-family: 'Dune Rise';
+    src: url('../fonts/Dune_Rise.ttf') format('truetype');
+}
+
+/* ===== BASE STYLES ===== */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('../images/The spice must flow._FotoSketcher11.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* ===== LAYOUT COMPONENTS ===== */
+.header-styles {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.footer-styles {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Utility classes for header and footer alignment */
+.header-content {
+    justify-content: flex-start;
+    margin-left: 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.75rem;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.footer-content button {
+    font-size: 0.65rem;
+    margin: 0 auto;
+}
+
+/* ===== FORM ELEMENTS ===== */
+textarea {
+    resize: none;
+    background-color: rgba(221, 160, 221, 0.2);
+}
+
+/* Command input container for prefix styling */
+.command-input-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.command-prefix {
+    position: absolute;
+    left: 8px;
+    z-index: 10;
+    color: #7e22ce; /* purple-700 */
+    font-weight: bold;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* ===== ANIMATIONS ===== */
+.purple-glow {
+    animation: purpleGlow 2s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+@keyframes purpleGlow {
+    0% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.8), 0 0 30px rgba(147, 51, 234, 0.4); }
+    100% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+}
+
+@keyframes animate-purpleGlow {
+    0% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.8), 0 0 30px rgba(147, 51, 234, 0.4); }
+    100% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+}
+
+/* Add this to your tailwind.config.js extend.animation */
+.animate-purpleGlow {
+    animation: animate-purpleGlow 2s ease-in-out infinite;
+}
+
+/* Invalid command styling */
+.invalid-command {
+    outline: 2px solid #7e22ce;
+    animation: pulse 0.8s ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        outline-color: #7e22ce;
+        outline-width: 2px;
+    }
+    50% {
+        outline-color: #a855f7;
+        outline-width: 3px;
+    }
+}
+
+/* ===== SUGGESTION BOX ===== */
+#suggestion-box {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Style for command suggestions */
+.suggestion-item {
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ===== TYPOGRAPHY ===== */
+.modal-content {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.modal-header {
+    font-family: 'Dune Rise', sans-serif;
+}
+
+/* Enhanced glass modal with animation (keeping for backward compatibility) */
+.glass-modal {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    animation: purpleGlow 2s ease-in-out infinite;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
