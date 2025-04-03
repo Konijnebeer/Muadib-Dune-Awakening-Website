@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "name": "/builder",
+      "description": "Dune Awakening base builder",
+      "handlerClass": "BuilderCommand"
+    }
+  ]
+}
