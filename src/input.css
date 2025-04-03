@@ -1,14 +1,22 @@
 @import "tailwindcss";
 
-/* ===== FONTS ===== */
+/* Custom font */
 @font-face {
     font-family: 'Dune Rise';
     src: url('../fonts/Dune_Rise.ttf') format('truetype');
 }
 
-/* ===== BASE STYLES ===== */
+/* Custom styles for frosted glass */
+.bg-opacity-20 {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.backdrop-blur-md {
+    backdrop-filter: blur(10px);
+}
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Arial', sans-serif; /* Updated font for the website */
     background-image: url('../images/The spice must flow._FotoSketcher11.jpg');
     background-repeat: no-repeat;
     background-position: center center;
@@ -16,7 +24,6 @@ body {
     background-size: cover;
 }
 
-/* ===== LAYOUT COMPONENTS ===== */
 .header-styles {
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
@@ -30,7 +37,7 @@ body {
 /* Utility classes for header and footer alignment */
 .header-content {
     justify-content: flex-start;
-    margin-left: 0;
+    margin-left: 0; /* Ensure alignment to the left */
 }
 
 .footer-content {
@@ -38,20 +45,139 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    font-size: 0.75rem;
-    justify-content: center;
-    gap: 0.5rem;
+    font-size: 0.75rem; /* Make text smaller */
+    justify-content: center; /* Center content horizontally */
+    gap: 0.5rem; /* Add spacing between elements */
 }
 
 .footer-content button {
-    font-size: 0.65rem;
-    margin: 0 auto;
+    font-size: 0.65rem; /* Make button text smaller */
+    margin: 0 auto; /* Center the button */
 }
 
-/* ===== FORM ELEMENTS ===== */
+
 textarea {
-    resize: none;
-    background-color: rgba(221, 160, 221, 0.2);
+    resize: none; /* Disable resizing */
+    background-color: rgba(221, 160, 221, 0.2); /* Light purple frosted look */
+}
+
+/* Purple glow animation for textarea */
+.purple-glow {
+    animation: purpleGlow 2s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+@keyframes purpleGlow {
+    0% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.8), 0 0 30px rgba(147, 51, 234, 0.4); }
+    100% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+}
+
+/* Modal glaze effect */
+.modal-glaze {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+/* Replace shake animation with invalid command styling */
+.invalid-command {
+    outline: 2px solid #7e22ce; /* purple-700 */
+    animation: pulse 0.8s ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        outline-color: #7e22ce; /* purple-700 */
+        outline-width: 2px;
+    }
+    50% {
+        outline-color: #a855f7; /* purple-500 */
+        outline-width: 3px;
+    }
+}
+
+#suggestion-box {
+    position: absolute;
+    top: calc(100% + 16px); /* Move it lower */
+    left: 0;
+    z-index: 10;
+    width: 100%; /* Match the width of the input box */
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-8px);
+    }
+    40% {
+        transform: translateX(8px);
+    }
+    60% {
+        transform: translateX(-8px);
+    }
+    80% {
+        transform: translateX(8px);
+    }
+}
+
+.modal-content {
+    font-family: 'Open Sans', sans-serif;
+}
+.purple-glow {
+    animation: purpleGlow 2s ease-in-out infinite;
+}
+@keyframes purpleGlow {
+    0% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
+}
+.modal-glaze {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+.modal-header {
+    font-family: 'Dune Rise', sans-serif;
+}
+/* Style for command suggestions without hover effects */
+.suggestion-item {
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+/* Add frosted glaze for suggestion box */
+#suggestion-box {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+/* Enhanced modal backdrop styling */
+#modal-backdrop {
+    backdrop-filter: blur(8px);
+    transition: backdrop-filter 0.3s ease;
+}
+/* Glass modal styling */
+.glass-modal {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    animation: purpleGlow 2s ease-in-out infinite;
+}
+.infobox-modal {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Command input container for prefix styling */
@@ -72,80 +198,6 @@ textarea {
     user-select: none;
 }
 
-
-/* ===== ANIMATIONS ===== */
-.purple-glow {
-    animation: purpleGlow 2s ease-in-out infinite;
-    transition: all 0.3s ease;
-}
-
-@keyframes purpleGlow {
-    0% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.8), 0 0 30px rgba(147, 51, 234, 0.4); }
-    100% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
-}
-
-@keyframes animate-purpleGlow {
-    0% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.8), 0 0 30px rgba(147, 51, 234, 0.4); }
-    100% { box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); }
-}
-
-/* Add this to your tailwind.config.js extend.animation */
-.animate-purpleGlow {
-    animation: animate-purpleGlow 2s ease-in-out infinite;
-}
-
-/* Invalid command styling */
-.invalid-command {
-    outline: 2px solid #7e22ce;
-    animation: pulse 0.8s ease-in-out;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        outline-color: #7e22ce;
-        outline-width: 2px;
-    }
-    50% {
-        outline-color: #a855f7;
-        outline-width: 3px;
-    }
-}
-
-/* ===== SUGGESTION BOX ===== */
-#suggestion-box {
-    position: absolute;
-    top: calc(100% + 16px);
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-/* Style for command suggestions */
-.suggestion-item {
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* ===== TYPOGRAPHY ===== */
-.modal-content {
-    font-family: 'Open Sans', sans-serif;
-}
-
-.modal-header {
-    font-family: 'Dune Rise', sans-serif;
-}
-
-/* Enhanced glass modal with animation (keeping for backward compatibility) */
-.glass-modal {
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 12px;
-    animation: purpleGlow 2s ease-in-out infinite;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+#command-input {
+    padding-left: 20px; /* Make room for the prefix */
 }

@@ -18,13 +18,6 @@
         .normal-font {
             font-family: 'Open Sans', sans-serif;
         }
-        .glass-modal {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 4px 6px rgba(128, 90, 213, 0.3), 0 1px 3px rgba(128, 90, 213, 0.2);
-            animation: purpleGlow 1.5s infinite alternate;
-        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen text-purple-900">
@@ -256,7 +249,7 @@
 
         <!-- Save Modal -->
         <div id="save-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-            <div class="absolute inset-0 bg-transparent backdrop-blur-md pointer-events-auto"></div>
+            <div class="absolute inset-0 bg-transparent pointer-events-auto" style="backdrop-filter: blur(8px);"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">Save Your Canvas</h3>
                 <form id="save-form" class="space-y-4">
@@ -279,7 +272,7 @@
 
         <!-- Load Modal -->
         <div id="load-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-            <div class="absolute inset-0 bg-transparent backdrop-blur-md pointer-events-auto"></div>
+            <div class="absolute inset-0 bg-transparent pointer-events-auto" style="backdrop-filter: blur(8px);"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">Load Saved Canvas</h3>
                 <div id="saved-list" class="max-h-60 overflow-y-auto mb-4 space-y-2">
@@ -298,7 +291,7 @@
         
         <!-- Settings Modal -->
         <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-            <div class="absolute inset-0 bg-transparent backdrop-blur-md pointer-events-auto"></div>
+            <div class="absolute inset-0 bg-transparent pointer-events-auto" style="backdrop-filter: blur(8px);"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">Settings</h3>
                 <div class="space-y-6">
@@ -361,7 +354,7 @@
 
         <!-- Name Prompt Modal -->
         <div id="name-prompt-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-            <div class="absolute inset-0 bg-transparent backdrop-blur-md pointer-events-auto"></div>
+            <div class="absolute inset-0 bg-transparent pointer-events-auto" style="backdrop-filter: blur(8px);"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">New Canvas</h3>
                 <form id="new-canvas-form" class="space-y-4">
