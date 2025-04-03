@@ -1094,134 +1094,182 @@ document.addEventListener('DOMContentLoaded', function() {
                     const side = shapeSides[s];
                     const otherSide = otherSides[o];
                     
-                    // Only consider sides of equal length (or one is root 2)
-                    if (Math.abs(side.length - otherSide.length) < 0.1 ||
-                        (Math.abs(side.length - Math.sqrt(2) * otherSide.length) < 0.1) ||
-                        (Math.abs(otherSide.length - Math.sqrt(2) * side.length) < 0.1)) {
+                    // Skip hypotenuse-to-hypotenuse snapping completely
+                    if (shape.type === 'rightTriangle' && s === 1 && 
+                        otherShape.type === 'rightTriangle' && o === 1) {
+                        continue;
+                    }
+                    
+                    // Special handling for right triangle
+                    // Skip snapping hypotenuse to sides of length 1 (not sqrt(2))
+                    if ((shape.type === 'rightTriangle' && s === 1) || 
+                        (otherShape.type === 'rightTriangle' && o === 1)) {
                         
-                        // Calculate midpoint and angle of the sides
-                        const midX1 = (side.start.x + side.end.x) / 2;
-                        const midY1 = (side.start.y + side.end.y) / 2;
-                        const angle1 = Math.atan2(side.end.y - side.start.y, side.end.x - side.start.x);
+                        const isHypotenuseToRegularSide = 
+                            (shape.type === 'rightTriangle' && s === 1 && 
+                             Math.abs(otherSide.length - gridSize) < 0.1) ||
+                            (otherShape.type === 'rightTriangle' && o === 1 && 
+                             Math.abs(side.length - gridSize) < 0.1);
                         
-                        const midX2 = (otherSide.start.x + otherSide.end.x) / 2;
-                        const midY2 = (otherSide.start.y + otherSide.end.y) / 2;
-                        const angle2 = Math.atan2(otherSide.start.y - otherSide.end.y, otherSide.start.x - otherSide.end.x);
+                        // Skip hypotenuse to regular side combinations
+                        if (isHypotenuseToRegularSide) {
+                            continue;
+                        }
+                    }
+                    
+                    // Determine whether sides are compatible for snapping
+                    let sidesAreCompatible = false;
+                    
+                    // Case 1: Equal length sides (with tolerance)
+                    if (Math.abs(side.length - otherSide.length) < 0.1) {
+                        // Make sure we're not dealing with two hypotenuses
+                        if (!(shape.type === 'rightTriangle' && s === 1 && 
+                              otherShape.type === 'rightTriangle' && o === 1)) {
+                            sidesAreCompatible = true;
+                        }
+                    }
+                    // Case 2: Right triangle hypotenuse to a side of length = hypotenuse/sqrt(2)
+                    else if ((shape.type === 'rightTriangle' && s === 1 && 
+                              Math.abs(side.length / Math.sqrt(2) - otherSide.length) < 0.1) ||
+                             (otherShape.type === 'rightTriangle' && o === 1 && 
+                              Math.abs(otherSide.length / Math.sqrt(2) - side.length) < 0.1)) {
+                        sidesAreCompatible = true;
+                    }
+                    
+                    // Skip if sides aren't compatible
+                    if (!sidesAreCompatible) continue;
+                    
+                    // Rest of the function remains the same
+                    // Calculate midpoint and angle of the sides
+                    const midX1 = (side.start.x + side.end.x) / 2;
+                    const midY1 = (side.start.y + side.end.y) / 2;
+                    const angle1 = Math.atan2(side.end.y - side.start.y, side.end.x - side.start.x);
+                    
+                    const midX2 = (otherSide.start.x + otherSide.end.x) / 2;
+                    const midY2 = (otherSide.start.y + otherSide.end.y) / 2;
+                    const angle2 = Math.atan2(otherSide.start.y - otherSide.end.y, otherSide.start.x - otherSide.end.x);
+                    
+                    // Calculate distance between midpoints
+                    const distance = Math.sqrt(
+                        Math.pow(midX1 - midX2, 2) + 
+                        Math.pow(midY1 - midY2, 2)
+                    );
+                    
+                    // If sides are close enough to snap
+                    if (distance < snapThreshold) {
+                        // For triangles forming a hexagon, we need special handling
+                        const isTriangleHexagonCase = 
+                            (shape.type === 'triangle' && otherShape.type === 'triangle') && 
+                            (Math.abs(angle1 - angle2) > Math.PI * 0.8 && Math.abs(angle1 - angle2) < Math.PI * 1.2);
                         
-                        // Calculate distance between midpoints
-                        const distance = Math.sqrt(
-                            Math.pow(midX1 - midX2, 2) + 
-                            Math.pow(midY1 - midY2, 2)
-                        );
+                        // Determine if sides should be perpendicular or parallel
+                        let shouldBePerp = shouldBePerpendicular(shape.type, s, otherShape.type, o);
                         
-                        // If sides are close enough to snap
-                        if (distance < snapThreshold) {
-                            // For triangles forming a hexagon, we need special handling
-                            const isTriangleHexagonCase = 
-                                (shape.type === 'triangle' && otherShape.type === 'triangle') && 
-                                (Math.abs(angle1 - angle2) > Math.PI * 0.8 && Math.abs(angle1 - angle2) < Math.PI * 1.2);
+                        // Override for triangle-to-triangle hexagon formation
+                        if (isTriangleHexagonCase) {
+                            shouldBePerp = false; // Force parallel for triangle hexagon
+                        }
+                        
+                        // Determine current angle relationship
+                        // Note that angle2 must be reversed to get the correct comparison
+                        let angleDiff = Math.abs(angle1 - angle2);
+                        
+                        // Normalize to [0, PI]
+                        angleDiff = angleDiff % Math.PI;
+                        if (angleDiff > Math.PI/2) {
+                            angleDiff = Math.PI - angleDiff;
+                        }
+                        
+                        // Calculate target angle difference (0 for parallel, PI/2 for perpendicular)
+                        const targetAngleDiff = shouldBePerp ? Math.PI/2 : 0;
+                        
+                        // How close the angles are to the desired alignment
+                        const angleAlignmentError = Math.abs(angleDiff - targetAngleDiff);
+                        
+                        // Only snap if angles are close to desired alignment
+                        if (angleAlignmentError < 0.3) {
+                            // Calculate rotation adjustment needed
+                            let rotationAdjustment = 0;
                             
-                            // Determine if sides should be perpendicular or parallel
-                            let shouldBePerp = shouldBePerpendicular(shape.type, s, otherShape.type, o);
-                            
-                            // Override for triangle-to-triangle hexagon formation
-                            if (isTriangleHexagonCase) {
-                                shouldBePerp = false; // Force parallel for triangle hexagon
-                            }
-                            
-                            // Current angle between the sides (0 means parallel, PI/2 means perpendicular)
-                            let currentAngleDiff = Math.abs(angle1 - angle2) % Math.PI;
-                            if (currentAngleDiff > Math.PI/2) {
-                                currentAngleDiff = Math.PI - currentAngleDiff;
-                            }
-                            
-                            // Calculate target angle difference (0 for parallel, PI/2 for perpendicular)
-                            const targetAngleDiff = shouldBePerp ? Math.PI/2 : 0;
-                            
-                            // How close the angles are to the desired alignment
-                            const angleAlignmentError = Math.abs(currentAngleDiff - targetAngleDiff);
-                            
-                            // If angles are approximately aligned as they should be
-                            if (angleAlignmentError < 0.3) {
-                                // Calculate rotation adjustment needed
-                                let rotationAdjustment = 0;
-                                
-                                if (shouldBePerp) {
-                                    // For perpendicular alignment, we want angle1 - angle2 = ±PI/2
-                                    const currentDiff = (angle1 - angle2 + 2*Math.PI) % Math.PI;
-                                    if (Math.abs(currentDiff - Math.PI/2) < 0.3) {
-                                        // Close to PI/2, minor adjustment
-                                        rotationAdjustment = Math.PI/2 - currentDiff;
-                                    } else if (Math.abs(currentDiff - Math.PI*3/2) < 0.3 || Math.abs(currentDiff + Math.PI/2) < 0.3) {
-                                        // Close to -PI/2 (or 3PI/2), minor adjustment
-                                        rotationAdjustment = -Math.PI/2 - currentDiff;
-                                    } else {
-                                        // Need major adjustment, determine direction
-                                        rotationAdjustment = Math.abs(angle1 - (angle2 + Math.PI/2)) < 
-                                                            Math.abs(angle1 - (angle2 - Math.PI/2)) ? 
-                                                            (angle2 + Math.PI/2) - angle1 : 
-                                                            (angle2 - Math.PI/2) - angle1;
+                            if (shouldBePerp) {
+                                // For perpendicular alignment
+                                if (Math.abs(angleDiff - Math.PI/2) < 0.3) {
+                                    // Already close to perpendicular, refine alignment
+                                    rotationAdjustment = (angle2 + Math.PI/2) - angle1;
+                                    // Ensure shortest rotation path
+                                    if (Math.abs(rotationAdjustment) > Math.PI/2) {
+                                        rotationAdjustment = (angle2 - Math.PI/2) - angle1;
                                     }
                                 } else {
-                                    // For parallel alignment, we want angle1 - angle2 = 0 or PI
-                                    const diff = Math.abs(angle1 - angle2) % Math.PI;
-                                    
-                                    if (isTriangleHexagonCase) {
-                                        // For hexagon formation, we want exact 180 degree alignment
-                                        rotationAdjustment = angle2 + Math.PI - angle1;
-                                    } else if (diff < 0.3) {
-                                        // Close to 0, minor adjustment
-                                        rotationAdjustment = angle2 - angle1;
-                                    } else if (Math.abs(diff - Math.PI) < 0.3) {
-                                        // Close to PI, minor adjustment
-                                        rotationAdjustment = angle2 + Math.PI - angle1;
-                                    } else {
-                                        // Need major adjustment, determine closest direction
-                                        rotationAdjustment = Math.abs(angle1 - angle2) < 
-                                                            Math.abs(angle1 - (angle2 + Math.PI)) ? 
-                                                            angle2 - angle1 : 
-                                                            angle2 + Math.PI - angle1;
-                                    }
+                                    // Major rotation needed
+                                    rotationAdjustment = Math.abs(angle1 - (angle2 + Math.PI/2)) < 
+                                                        Math.abs(angle1 - (angle2 - Math.PI/2)) ? 
+                                                        (angle2 + Math.PI/2) - angle1 : 
+                                                        (angle2 - Math.PI/2) - angle1;
                                 }
-                                
-                                // Apply rotation adjustment
-                                shape.rotation = (shape.rotation + rotationAdjustment + 2 * Math.PI) % (2 * Math.PI);
-                                
-                                // Recalculate sides after rotation adjustment
-                                const updatedShapeSides = getSides(shape);
-                                const updatedSide = updatedShapeSides[s];
-                                
-                                // Adjust offset for triangle hexagon formation
-                                let outwardOffset = 0.05; // Default small offset
+                            } else {
+                                // For parallel alignment
+                                const diff = Math.abs(angle1 - angle2) % Math.PI;
                                 
                                 if (isTriangleHexagonCase) {
-                                    // For hexagon, ensure perfect alignment with no gap
-                                    outwardOffset = 0; // No offset for perfect alignment
-                                    
-                                    // Calculate exact alignment position
-                                    const alignX = midX2 - (updatedSide.start.x + updatedSide.end.x) / 2;
-                                    const alignY = midY2 - (updatedSide.start.y + updatedSide.end.y) / 2;
-                                    
-                                    // Apply exact alignment
-                                    shape.x += alignX;
-                                    shape.y += alignY;
+                                    // For hexagon formation, align at 180 degrees
+                                    rotationAdjustment = angle2 + Math.PI - angle1;
+                                } else if (diff < 0.3) {
+                                    // Close to parallel, refine alignment
+                                    rotationAdjustment = angle2 - angle1;
+                                } else if (Math.abs(diff - Math.PI) < 0.3) {
+                                    // Close to anti-parallel, refine alignment
+                                    rotationAdjustment = angle2 + Math.PI - angle1;
                                 } else {
-                                    // Normal case - use anti-overlap logic
-                                    const updatedMidX1 = (updatedSide.start.x + updatedSide.end.x) / 2;
-                                    const updatedMidY1 = (updatedSide.start.y + updatedSide.end.y) / 2;
-                                    
-                                    // Use the normal vectors to ensure shapes are properly aligned
-                                    // This pushes the shape slightly away from the other shape to prevent overlap
-                                    const alignX = midX2 - updatedMidX1 + (updatedSide.normal.x + otherSide.normal.x) * outwardOffset * gridSize;
-                                    const alignY = midY2 - updatedMidY1 + (updatedSide.normal.y + otherSide.normal.y) * outwardOffset * gridSize;
-                                    
-                                    // Adjust position to snap sides together
-                                    shape.x += alignX;
-                                    shape.y += alignY;
+                                    // Major rotation needed, choose shortest path
+                                    rotationAdjustment = Math.abs(angle1 - angle2) < 
+                                                        Math.abs(angle1 - (angle2 + Math.PI)) ? 
+                                                        angle2 - angle1 : 
+                                                        angle2 + Math.PI - angle1;
                                 }
-                                
-                                return; // Once snapped, we're done
                             }
+                            
+                            // Apply rotation adjustment
+                            shape.rotation = (shape.rotation + rotationAdjustment + 2 * Math.PI) % (2 * Math.PI);
+                            
+                            // Recalculate sides after rotation
+                            const updatedShapeSides = getSides(shape);
+                            const updatedSide = updatedShapeSides[s];
+                            
+                            // Calculate the updated midpoint of our side
+                            const updatedMidX = (updatedSide.start.x + updatedSide.end.x) / 2;
+                            const updatedMidY = (updatedSide.start.y + updatedSide.end.y) / 2;
+                            
+                            // Offset for different cases
+                            let outwardOffset = 0.05; // Default small offset
+                            
+                            if (isTriangleHexagonCase) {
+                                // Perfect alignment for hexagons
+                                outwardOffset = 0;
+                            } else if ((shape.type === 'rightTriangle' && s === 1) || 
+                                      (otherShape.type === 'rightTriangle' && o === 1)) {
+                                // Slightly larger offset for hypotenuse to prevent overlap
+                                outwardOffset = 0.08;
+                            }
+                            
+                            // Calculate the movement needed to align sides
+                            let alignX, alignY;
+                            
+                            if (isTriangleHexagonCase) {
+                                // Exact alignment for hexagon formation
+                                alignX = midX2 - updatedMidX;
+                                alignY = midY2 - updatedMidY;
+                            } else {
+                                // Use the normal vectors to push shapes slightly apart
+                                alignX = midX2 - updatedMidX + (updatedSide.normal.x + otherSide.normal.x) * outwardOffset * gridSize;
+                                alignY = midY2 - updatedMidY + (updatedSide.normal.y + otherSide.normal.y) * outwardOffset * gridSize;
+                            }
+                            
+                            // Apply the alignment movement
+                            shape.x += alignX;
+                            shape.y += alignY;
+                            
+                            return; // Once snapped, we're done
                         }
                     }
                 }
@@ -1231,23 +1279,53 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to determine if sides should be perpendicular based on shape types and side indices
     function shouldBePerpendicular(shapeType1, sideIndex1, shapeType2, sideIndex2) {
-        // Special case for right triangle hypotenuse
-        if (shapeType1 === 'rightTriangle' && sideIndex1 === 1) {
-            // Hypotenuse should connect perpendicular to other shapes
-            return true;
-        }
-        if (shapeType2 === 'rightTriangle' && sideIndex2 === 1) {
-            // Hypotenuse should connect perpendicular to other shapes
-            return true;
+        // Right triangle special cases
+        if (shapeType1 === 'rightTriangle') {
+            // For sides 0 and 2 (the perpendicular sides), determine perpendicularity
+            if (sideIndex1 === 0 || sideIndex1 === 2) {
+                // These sides should align perpendicularly to each other on a right triangle
+                if (shapeType2 === 'rightTriangle' && (sideIndex2 === 0 || sideIndex2 === 2)) {
+                    // When connecting right angles, one side must be 0 and the other 2
+                    return (sideIndex1 + sideIndex2) % 2 === 0;
+                }
+                
+                // For other shapes, typically parallel alignment is better
+                return false;
+            }
+            
+            // For hypotenuse (side 1) of a right triangle
+            if (sideIndex1 === 1) {
+                if (shapeType2 === 'rightTriangle' && sideIndex2 === 1) {
+                    // Hypotenuse to hypotenuse should be parallel
+                    return false;
+                }
+                // Hypotenuse to other sides should generally be perpendicular
+                return true;
+            }
         }
         
-        // For a square connecting to a right triangle's right angle
-        if ((shapeType1 === 'square' && shapeType2 === 'rightTriangle' && 
-             (sideIndex2 === 0 || sideIndex2 === 2)) ||
-            (shapeType2 === 'square' && shapeType1 === 'rightTriangle' && 
-             (sideIndex1 === 0 || sideIndex1 === 2))) {
-            // These sides should be perpendicular
-            return true;
+        // Mirror the logic for shapeType2
+        if (shapeType2 === 'rightTriangle') {
+            if (sideIndex2 === 0 || sideIndex2 === 2) {
+                if (shapeType1 === 'rightTriangle' && (sideIndex1 === 0 || sideIndex1 === 2)) {
+                    return (sideIndex1 + sideIndex2) % 2 === 0;
+                }
+                return false;
+            }
+            
+            if (sideIndex2 === 1) {
+                if (shapeType1 === 'rightTriangle' && sideIndex1 === 1) {
+                    return false;
+                }
+                return true;
+            }
+        }
+        
+        // Square to right triangle special cases
+        if ((shapeType1 === 'square' && shapeType2 === 'rightTriangle') ||
+            (shapeType2 === 'square' && shapeType1 === 'rightTriangle')) {
+            // Square sides should align parallel to right triangle sides 0 and 2
+            return false;
         }
         
         // Default to parallel alignment for other cases
@@ -1436,11 +1514,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = saveNameInput.value.trim();
         if (!name) return;
         
-        // Create save object
+        // Create save object with fief grid settings included
         const saveData = {
             name: name,
             shapes: placedShapes,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            fiefSettings: {
+                outlineEnabled: fiefOutlineEnabled,
+                advancedGridEnabled: advancedFiefGridEnabled
+            }
         };
         
         // Save to localStorage
@@ -1588,6 +1670,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Load shapes
             placedShapes = JSON.parse(JSON.stringify(saveData.shapes)); // Deep clone
+            
+            // Load fief grid settings if they exist in the save data
+            if (saveData.fiefSettings) {
+                fiefOutlineEnabled = saveData.fiefSettings.outlineEnabled;
+                advancedFiefGridEnabled = saveData.fiefSettings.advancedGridEnabled;
+                
+                // Update UI to reflect loaded settings
+                updateFiefToggleUI();
+            }
             
             // Deselect any shape
             selectedShapeIndex = -1;
