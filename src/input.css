@@ -6,16 +6,6 @@
     src: url('../fonts/Dune_Rise.ttf') format('truetype');
 }
 
-/* Custom styles that should be removed if using Tailwind v4 utilities directly */
-/* These classes are deprecated - kept for reference only */
-/* .bg-opacity-20 {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.backdrop-blur-md {
-    backdrop-filter: blur(10px);
-} */
-
 body {
     font-family: 'Arial', sans-serif; /* Updated font for the website */
     background-image: url('../images/The spice must flow._FotoSketcher11.jpg');

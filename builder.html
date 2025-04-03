@@ -23,8 +23,10 @@
 <body class="flex flex-col min-h-screen text-purple-900">
     <header class="header-styles p-4 flex items-center">
         <div class="flex items-center w-full max-w-screen-md mx-auto ml-0">
-            <img src="images/Muadib.png" alt="Logo" class="h-8 mr-4">
-            <h1 class="text-xl font-bold">Muadib</h1>
+            <a href="index.html" class="flex items-center hover:opacity-80 transition-opacity">
+                <img src="images/Muadib.png" alt="Logo" class="h-8 mr-4">
+                <h1 class="text-xl font-bold">Muadib</h1>
+            </a>
         </div>
     </header>
     <main class="container mx-auto p-4 w-4/5 max-w-6xl">
@@ -32,7 +34,7 @@
             <!-- Main builder section -->
             <section id="builder-content" class="flex flex-col justify-start items-center relative w-3/4">
                 <div class="bg-white/20 backdrop-blur rounded-lg p-6 shadow-lg w-full">
-                    <h2 class="text-xl mb-4">Base Builder</h2>
+                    <h2 class="text-xl mb-4 font-semibold">Base Builder</h2>
                     
                     <div class="normal-font">
                         <!-- Canvas with cream background -->
@@ -234,11 +236,11 @@
                         <!-- Add "Understood" button at bottom of tutorial -->
                         <div class="mt-6 flex justify-center">
                             <button id="understood-btn" 
-                                    class="px-6 py-3 rounded-lg text-white font-semibold
-                                          bg-gradient-to-r from-purple-600 to-purple-700
+                                    class="px-6 py-3 rounded-lg text-purple-900 font-semibold
+                                          bg-white/20 backdrop-blur
                                           border border-white/20
-                                          shadow-lg hover:shadow-purple-300/50
-                                          transition-all duration-300 hover:-translate-y-0.5">
+                                          shadow-md hover:shadow-purple-300/50
+                                          transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/30">
                                 Understood
                             </button>
                         </div>
@@ -252,17 +254,17 @@
             <div class="absolute inset-0 bg-transparent pointer-events-auto backdrop-blur"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">Save Your Canvas</h3>
-                <form id="save-form" class="space-y-4">
+                <form id="save-form" class="space-y-4 normal-font">
                     <div>
                         <label for="save-name" class="block text-sm font-medium text-purple-900 mb-1">Enter a name for your creation:</label>
                         <input type="text" id="save-name" class="w-full px-4 py-2 rounded-md border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500" 
                                placeholder="My awesome design" required>
                     </div>
                     <div class="flex justify-end space-x-3">
-                        <button type="button" id="cancel-save" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">
+                        <button type="button" id="cancel-save" class="px-4 py-2 bg-white/20 backdrop-blur text-purple-900 rounded-md border border-white/20 hover:bg-white/30 transition-colors">
                             Cancel
                         </button>
-                        <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                        <button type="submit" class="px-4 py-2 bg-white/20 backdrop-blur text-purple-900 rounded-md border border-white/20 hover:bg-white/30 transition-colors">
                             Save
                         </button>
                     </div>
@@ -275,14 +277,14 @@
             <div class="absolute inset-0 bg-transparent pointer-events-auto backdrop-blur"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">Load Saved Canvas</h3>
-                <div id="saved-list" class="max-h-60 overflow-y-auto mb-4 space-y-2">
+                <div id="saved-list" class="max-h-60 overflow-y-auto mb-4 space-y-2 normal-font">
                     <!-- Saved items will be inserted here -->
                 </div>
-                <div class="flex justify-end space-x-3">
-                    <button type="button" id="new-canvas-btn" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                <div class="flex justify-end space-x-3 normal-font">
+                    <button type="button" id="new-canvas-btn" class="px-4 py-2 bg-white/20 backdrop-blur text-purple-900 rounded-md border border-white/20 hover:bg-white/30 transition-colors">
                         New Canvas
                     </button>
-                    <button type="button" id="cancel-load" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">
+                    <button type="button" id="cancel-load" class="px-4 py-2 bg-white/20 backdrop-blur text-purple-900 rounded-md border border-white/20 hover:bg-white/30 transition-colors">
                         Cancel
                     </button>
                 </div>
@@ -294,7 +296,7 @@
             <div class="absolute inset-0 bg-transparent pointer-events-auto backdrop-blur"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">Settings</h3>
-                <div class="space-y-6">
+                <div class="space-y-6 normal-font">
                     <div>
                         <p class="text-purple-900 font-medium mb-3">Fief Display Options:</p>
                         
@@ -344,8 +346,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-end space-x-3 mt-6">
-                    <button type="button" id="close-settings" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                <div class="flex justify-end space-x-3 mt-6 normal-font">
+                    <button type="button" id="close-settings" class="px-4 py-2 bg-white/20 backdrop-blur text-purple-900 rounded-md border border-white/20 hover:bg-white/30 transition-colors">
                         Close
                     </button>
                 </div>
@@ -357,17 +359,17 @@
             <div class="absolute inset-0 bg-transparent pointer-events-auto backdrop-blur"></div>
             <div class="glass-modal relative p-6 max-w-md w-full z-10">
                 <h3 class="text-xl font-semibold mb-4 text-purple-900">New Canvas</h3>
-                <form id="new-canvas-form" class="space-y-4">
+                <form id="new-canvas-form" class="space-y-4 normal-font">
                     <div>
                         <label for="canvas-name" class="block text-sm font-medium text-purple-900 mb-1">Name your new canvas:</label>
                         <input type="text" id="canvas-name" class="w-full px-4 py-2 rounded-md border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500" 
                                placeholder="My new design" required>
                     </div>
                     <div class="flex justify-end space-x-3">
-                        <button type="button" id="cancel-new-canvas" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">
+                        <button type="button" id="cancel-new-canvas" class="px-4 py-2 bg-white/20 backdrop-blur text-purple-900 rounded-md border border-white/20 hover:bg-white/30 transition-colors">
                             Cancel
                         </button>
-                        <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                        <button type="submit" class="px-4 py-2 bg-white/20 backdrop-blur text-purple-900 rounded-md border border-white/20 hover:bg-white/30 transition-colors">
                             Create
                         </button>
                     </div>
@@ -379,7 +381,12 @@
     <footer class="footer-styles p-4 mt-auto flex items-center justify-start">
         <div class="bg-white/20 backdrop-blur rounded-lg p-4 shadow-lg text-center">
             <p class="text-sm text-purple-900 mb-2">Copyright 2025</p>
-            <a href="https://github.com/konijnebeer" target="_blank" class="p-2 rounded-lg bg-purple-200/50 hover:bg-purple-200/70">
+            <a href="https://github.com/konijnebeer" target="_blank" 
+               class="px-4 py-2 rounded-lg text-purple-900 font-semibold
+                      bg-white/20 backdrop-blur
+                      border border-white/20
+                      shadow-md hover:shadow-purple-300/50
+                      transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/30">
                 GitHub
             </a>
         </div>
